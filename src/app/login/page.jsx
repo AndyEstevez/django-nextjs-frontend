@@ -1,11 +1,12 @@
 "use client"
 
 
-// const LOGIN_URL = "http://127.0.0.1:8000/api/token/pair"
+import { useRouter } from "next/navigation";
 const LOGIN_URL = "/api/login/"
 
 
 export default function Login() {
+    const router = useRouter()
     async function handleSubmit(event){
         event.preventDefault();
         console.log(event, event.target)
@@ -24,6 +25,7 @@ export default function Login() {
         console.log(data)
         if(response.ok){
             console.log("LOGGED IN")
+            router.replace('/')
         }
         
     }
