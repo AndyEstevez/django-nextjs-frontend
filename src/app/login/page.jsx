@@ -1,7 +1,9 @@
 "use client"
 
 
-const LOGIN_URL = "http://127.0.0.1:8000/api/token/pair"
+// const LOGIN_URL = "http://127.0.0.1:8000/api/token/pair"
+const LOGIN_URL = "/api/login/"
+
 
 export default function Login() {
     async function handleSubmit(event){
