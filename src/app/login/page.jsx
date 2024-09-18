@@ -2,13 +2,11 @@
 
 
 import { useAuth } from "@/components/authProvider";
-import { useRouter } from "next/navigation";
 const LOGIN_URL = "/api/login/"
 
 
 export default function Login() {
     const auth = useAuth()
-    const router = useRouter()
 
     async function handleSubmit(event){
         event.preventDefault();
@@ -29,7 +27,6 @@ export default function Login() {
         if(response.ok){
             console.log("LOGGED IN")
             auth.login()
-            router.replace('/')
         }
     }
 
