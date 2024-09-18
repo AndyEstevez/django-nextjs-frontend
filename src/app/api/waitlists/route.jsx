@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getToken } from "../login/lib/auth";
+import { getToken } from "../../../lib/auth";
 
 const DJANGO_API_WAITLISTS_URL = "http://127.0.0.1:8000/api/waitlists/"
 

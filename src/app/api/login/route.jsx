@@ -2,7 +2,7 @@
 
 // import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { setRefreshToken, setToken } from './lib/auth'
+import { setRefreshToken, setToken } from '../../../lib/auth'
 
 const DJANGO_API_LOGIN_URL = "http://127.0.0.1:8000/api/token/pair"
 

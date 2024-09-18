@@ -1,12 +1,15 @@
 "use client"
 
 
+import { useAuth } from "@/components/authProvider";
 import { useRouter } from "next/navigation";
 const LOGIN_URL = "/api/login/"
 
 
 export default function Login() {
+    const auth = useAuth()
     const router = useRouter()
+
     async function handleSubmit(event){
         event.preventDefault();
         console.log(event, event.target)
@@ -25,11 +28,10 @@ export default function Login() {
         console.log(data)
         if(response.ok){
             console.log("LOGGED IN")
+            auth.login()
             router.replace('/')
         }
-        
     }
-
 
     return <div className="h-[95vh]">
         <div className="max-w-md mx-auto py-5"></div>
