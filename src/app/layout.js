@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/components/authProvider";
 import { ThemeProvider } from "@/components/themeProvider";
+import BaseLayout from "@/components/layout/BaseLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +29,9 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class"
             defaultTheme="system">
         <AuthProvider>
-        {children}
+          <BaseLayout className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40">
+          {children}
+          </BaseLayout>
         </AuthProvider>
         </ThemeProvider>
        
