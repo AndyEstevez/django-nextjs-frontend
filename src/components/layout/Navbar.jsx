@@ -45,6 +45,7 @@ export default function Navbar({className}) {
           {NavLinks.map((navLinkItem, idx) => {
             const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
             return shouldHide ? null : <Link
+            key={`nav-links-a-${idx}`}
             href={navLinkItem.href}
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
@@ -71,6 +72,7 @@ export default function Navbar({className}) {
           {NavLinks.map((navLinkItem, idx) => {
             const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
             return shouldHide ? null : <Link
+            key={`nav-links-b-${idx}`}
             href={navLinkItem.href}
             className="text-muted-foreground hover:text-foreground"
           >
@@ -87,6 +89,7 @@ export default function Navbar({className}) {
                 {NonUserLinks.map((navLinkItem, idx) => {
                     const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
                     return shouldHide ? null : <Link
+                    key={`nav-links-c-${idx}`}
                     href={navLinkItem.href}
                     className="text-muted-foreground hover:text-foreground">
                 {navLinkItem.label}
@@ -102,6 +105,7 @@ export default function Navbar({className}) {
         </div>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
           { auth.isAuthenticated ? 
+          <div className="ml-auto">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
@@ -118,10 +122,12 @@ export default function Navbar({className}) {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
             : <> 
             {NonUserLinks.map((navLinkItem, idx) => {
                 const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
                 return shouldHide ? null : <Link
+                key={`nav-links-d-${idx}`}
                 href={navLinkItem.href}
                 className="text-muted-foreground transition-colors hover:text-foreground">
             {navLinkItem.label}
