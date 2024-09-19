@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useAuth } from "../authProvider"
-import { NavLinks } from "./NavLinks"
+import { NavLinks, NonUserLinks } from "./NavLinks"
 
 export const description =
   "A settings page. The settings page has a sidebar navigation and a main content area. The main content area has a form to update the store name and a form to update the plugins directory. The sidebar navigation has links to general, security, integrations, support, organizations, and advanced settings."
@@ -79,26 +79,29 @@ export default function Navbar({className}) {
           })}
               
              
-              { auth.isAuthenticated && 
+              { auth.isAuthenticated ?
               <Link href="/logout" className="hover:text-foreground">
                 Logout
               </Link>
-                }
+                : <>
+                {NonUserLinks.map((navLinkItem, idx) => {
+                    const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
+                    return shouldHide ? null : <Link
+                    href={navLinkItem.href}
+                    className="text-muted-foreground hover:text-foreground">
+                {navLinkItem.label}
+            </Link>
+            })}
+                </>}
             </nav>
           </SheetContent>
         </Sheet>
+        <div className="md:hidden">
+            <BrandLink displayName={true}/>
+
+        </div>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-          <form className="ml-auto flex-1 sm:flex-initial">
-            <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search products..."
-                className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-              />
-            </div>
-          </form>
-          { auth.isAuthenticated && 
+          { auth.isAuthenticated ? 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
@@ -115,7 +118,16 @@ export default function Navbar({className}) {
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-            }
+            : <> 
+            {NonUserLinks.map((navLinkItem, idx) => {
+                const shouldHide = !auth.isAuthenticated && navLinkItem.authRequired
+                return shouldHide ? null : <Link
+                href={navLinkItem.href}
+                className="text-muted-foreground transition-colors hover:text-foreground">
+            {navLinkItem.label}
+          </Link>
+          })}
+          </>}
         </div>
       </header>
     )
