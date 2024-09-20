@@ -3,6 +3,7 @@
 import { useAuth } from '@/components/authProvider';
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import WaitlistForm from './forms';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
@@ -23,13 +24,11 @@ export default function Page() {
   
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <WaitlistForm/>
       <div>
         {JSON.stringify(data)}
       </div>
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-        </div>
-      </main>
+      
     </div>
   );
 }

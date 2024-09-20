@@ -30,11 +30,16 @@ export default function Page() {
             body: jsonData
         }
         const response = await fetch(LOGIN_URL, requestOptions)
-        const data = await response.json()
+        let data = {}
+        try {
+          data = await response.json()
+        } catch (error) {
+
+        }
         console.log(data)
         if(response.ok){
             console.log("LOGGED IN")
-            auth.login()
+            auth.login(data?.username)
         }
     }
   return (

@@ -1,6 +1,6 @@
 
 
-const NavLinks = [
+export const NavLinks = [
     {
         label: "Dashboard",
         authRequired: false,
@@ -9,7 +9,7 @@ const NavLinks = [
     {
         label: "Waitlist",
         authRequired: true,
-        href: "/",
+        href: "/waitlists",
     }
 ]
 

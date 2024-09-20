@@ -1,7 +1,6 @@
 "use client"
 
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 const { createContext, useContext, useState, useEffect } = require("react");
 
@@ -12,9 +11,11 @@ const LOGOUT_REDIRECT_URL = "/login"
 const LOGIN_REQUIRED_URL = "/login"
 
 const LOCAL_STORAGE_KEY = "is-logged-in"
+const LOCAL_USERNAME_KEY = "username"
 
 export function AuthProvider({children}){
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [username, setUsername] = useState("")
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
@@ -26,11 +27,22 @@ export function AuthProvider({children}){
             const storedAuthStatusInt = parseInt(storedAuthStatus)
             setIsAuthenticated(storedAuthStatusInt===1)
         }
+
+        const storedUn = localStorage.getItem(LOCAL_USERNAME_KEY)
+        if (storedUn) {
+            setUsername(storedUn)
+        }
     }, [])
 
-    const login = () => {
+    const login = (username) => {
         setIsAuthenticated(true)
         localStorage.setItem(LOCAL_STORAGE_KEY, "1")
+        if (username) {
+            localStorage.setItem(LOCAL_USERNAME_KEY, `${username}`)
+            setUsername(username)
+        } else {
+            localStorage.removeItem(LOCAL_USERNAME_KEY)
+        }
         const nextUrl = searchParams.get('next')
         const invalidNextUrl = ['/login', '/logout']
         const nextUrlValid = nextUrl && nextUrl.startsWith("/") && !invalidNextUrl.includes(nextUrl)
@@ -60,7 +72,7 @@ export function AuthProvider({children}){
         }
         router.replace(LOGIN_REQUIRED_URL)
     }
-    return <AuthContext.Provider value={{isAuthenticated, login, logout, loginRequiredRedirect}}>
+    return <AuthContext.Provider value={{isAuthenticated, login, logout, loginRequiredRedirect, username}}>
         {children}
     </AuthContext.Provider>
 }
